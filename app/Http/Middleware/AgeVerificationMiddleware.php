@@ -13,10 +13,16 @@ class AgeVerificationMiddleware
         $user = auth()->user();
 
         if (!$user) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Please log in to continue.'], 401);
+            }
             return redirect()->route('login')->with('error', 'Please log in to continue.');
         }
 
         if (!$user->isEligibleToPurchase()) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Age verification required. You must be 18+ and verified to purchase gel blasters.'], 403);
+            }
             return redirect()->route('verification.show')->with('error', 
                 'Age verification required. You must be 18+ and verified to purchase gel blasters.');
         }

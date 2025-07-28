@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminVerificationController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +49,6 @@ require __DIR__.'/auth.php';
 // Product routes
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/category/{category:slug}', [ProductController::class, 'category'])->name('products.category');
     Route::get('/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 });
 
@@ -140,8 +140,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/notifications/check', [NotificationController::class, 'check'])->name('admin.notifications.check');
 });
 
+// User notification routes
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications/user', [NotificationController::class, 'userNotifications'])->name('notifications.user');
+});
+
 // Static pages
 Route::view('/about', 'pages.about')->name('about');
-Route::view('/contact', 'pages.contact')->name('contact');
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store']);
 Route::view('/privacy', 'pages.privacy')->name('privacy');
 Route::view('/terms', 'pages.terms')->name('terms');

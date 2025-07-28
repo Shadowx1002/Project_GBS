@@ -17,26 +17,27 @@
             <div class="card p-8" data-aos="fade-right">
                 <h2 class="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h2>
                 
-                <form class="space-y-6">
+                <form class="space-y-6" action="{{ route('contact') }}" method="POST">
+                    @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="form-label">First Name</label>
-                            <input type="text" class="form-input" required>
+                            <input type="text" name="first_name" class="form-input" required>
                         </div>
                         <div>
                             <label class="form-label">Last Name</label>
-                            <input type="text" class="form-input" required>
+                            <input type="text" name="last_name" class="form-input" required>
                         </div>
                     </div>
                     
                     <div>
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" required>
+                        <input type="email" name="email" class="form-input" required>
                     </div>
                     
                     <div>
                         <label class="form-label">Subject</label>
-                        <select class="form-input">
+                        <select name="subject" class="form-input">
                             <option>General Inquiry</option>
                             <option>Product Support</option>
                             <option>Order Issue</option>
@@ -47,7 +48,7 @@
                     
                     <div>
                         <label class="form-label">Message</label>
-                        <textarea rows="5" class="form-input" required></textarea>
+                        <textarea name="message" rows="5" class="form-input" required></textarea>
                     </div>
                     
                     <button type="submit" class="w-full btn-primary">Send Message</button>

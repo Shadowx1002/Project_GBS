@@ -53,11 +53,11 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                     </svg>
                                 </button>
-                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200">
                                     <div class="py-1">
                                         <a href="{{ route('products.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
                                         @foreach($globalCategories as $category)
-                                            <a href="{{ route('products.category', $category->slug) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                 {{ $category->name }}
                                             </a>
                                         @endforeach
@@ -124,6 +124,7 @@
                                         @if(auth()->user()->isAdmin())
                                             <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-blue-600 hover:bg-gray-100">Admin Panel</a>
                                         @endif
+                                        <div class="border-t border-gray-100"></div>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -158,7 +159,7 @@
                         <a href="{{ route('home') }}" class="mobile-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
                         <a href="{{ route('products.index') }}" class="mobile-nav-link">All Products</a>
                         @foreach($globalCategories as $category)
-                            <a href="{{ route('products.category', $category->slug) }}" class="mobile-nav-link ml-4">{{ $category->name }}</a>
+                            <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="mobile-nav-link ml-4">{{ $category->name }}</a>
                         @endforeach
                         <a href="{{ route('about') }}" class="mobile-nav-link">About</a>
                         <a href="{{ route('contact') }}" class="mobile-nav-link">Contact</a>
@@ -391,6 +392,11 @@
                     }
                 }
             });
+        });
+
+        // Initialize cart functionality when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
         });
     </script>
 

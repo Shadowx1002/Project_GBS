@@ -30,10 +30,9 @@ class ProductController extends Controller
 
         // Category filter
         if ($request->filled('category')) {
-            $category = Category::where('slug', $request->category)->first();
-            if ($category) {
-                $query->where('category_id', $category->id);
-            }
+            $query->whereHas('category', function ($categoryQuery) use ($request) {
+                $categoryQuery->where('slug', $request->category);
+            });
         }
 
         // Brand filter
@@ -116,15 +115,4 @@ class ProductController extends Controller
         return view('products.show', compact('product', 'relatedProducts'));
     }
 
-    public function category(Category $category)
-    {
-        $products = Product::with(['category', 'primaryImage'])
-                          ->active()
-                          ->inStock()
-                          ->where('category_id', $category->id)
-                          ->orderBy('created_at', 'desc')
-                          ->paginate(12);
-
-        return view('products.category', compact('category', 'products'));
-    }
 }

@@ -12,7 +12,7 @@ class CartController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('age_verified')->except(['index', 'count', 'items']);
+        $this->middleware('age_verified')->only(['add', 'update']);
     }
 
     public function index()

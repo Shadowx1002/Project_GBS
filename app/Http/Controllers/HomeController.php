@@ -21,6 +21,8 @@ class HomeController extends Controller
                          ->get();
         });
 
-        return view('home', compact('featuredProducts'));
+        $categories = Category::active()->ordered()->get();
+
+        return view('home', compact('featuredProducts', 'categories'));
     }
 }

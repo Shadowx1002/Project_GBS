@@ -74,6 +74,9 @@
                                 </p>
                             </div>
                         @endif
+                        <div class="mt-6">
+                            <p class="text-sm text-gray-600 mb-4">You can resubmit your verification below.</p>
+                        </div>
                     @endif
                 </div>
             </div>

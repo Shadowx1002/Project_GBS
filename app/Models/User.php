@@ -71,6 +71,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isEligibleToPurchase()
     {
-        return $this->age >= 18 && $this->is_verified;
+        return $this->getAgeAttribute() >= 18 && $this->is_verified;
     }
 }
