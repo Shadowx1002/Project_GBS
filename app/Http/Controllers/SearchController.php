@@ -53,4 +53,24 @@ class SearchController extends Controller
             })
         ]);
     }
+
+    public function index(Request $request)
+    {
+        $query = $request->get('q', '');
+        
+        if (strlen($query) < 2) {
+            return redirect()->route('products.index');
+        }
+
+        $products = Product::active()
+                          ->inStock()
+                          ->where(function ($q) use ($query) {
+                              $q->where('name', 'ILIKE', "%{$query}%")
+                                ->orWhere('description', 'ILIKE', "%{$query}%")
+                                ->orWhere('brand', 'ILIKE', "%{$query}%");
+                          })
+                          ->with(['category', 'primaryImage'])
+                          ->paginate(12);
+        return view('products.search', compact('products', 'query'));
+    }
 }

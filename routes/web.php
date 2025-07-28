@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Auth\CustomLoginController;
@@ -22,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Search routes
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/search/suggestions', [SearchController::class, 'suggestions'])->name('search.suggestions');
 
 // Custom Authentication routes
 Route::middleware('guest')->group(function () {
@@ -77,12 +84,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/items', [CartController::class, 'items'])->name('cart.items');
     });
 
-    // Orders routes (placeholder - you'll need to create OrderController)
-    
-Route::prefix('orders')->group(function () {
-    Route::get('/', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
-});
+    // Orders routes
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
+    });
+
+    // Checkout routes
+    Route::prefix('checkout')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+        Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
+    });
 });
 
 // Admin routes
@@ -112,6 +125,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/', [AdminVerificationController::class, 'index'])->name('admin.verifications.index');
         Route::patch('/{verification}/approve', [AdminVerificationController::class, 'approve'])->name('admin.verifications.approve');
         Route::patch('/{verification}/reject', [AdminVerificationController::class, 'reject'])->name('admin.verifications.reject');
+        Route::get('/{verification}/download', [AdminVerificationController::class, 'download'])->name('admin.verifications.download');
     });
     
     // User management
@@ -121,6 +135,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         'edit' => 'admin.users.edit',
         'update' => 'admin.users.update',
     ]);
+
+    // Notification routes
+    Route::get('/notifications/check', [NotificationController::class, 'check'])->name('admin.notifications.check');
 });
 
 // Static pages
