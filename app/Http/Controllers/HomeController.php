@@ -12,14 +12,12 @@ class HomeController extends Controller
     public function index()
     {
         // Cache the data for 1 hour to improve performance
-        $featuredProducts = Cache::remember('featured_products', 3600, function () {
-            return Product::with(['category', 'primaryImage'])
-                         ->active()
-                         ->featured()
-                         ->inStock()
-                         ->limit(8)
-                         ->get();
-        });
+        $featuredProducts = Product::with(['category', 'primaryImage'])
+                                 ->active()
+                                 ->featured()
+                                 ->inStock()
+                                 ->limit(8)
+                                 ->get();
 
         $categories = Category::active()->ordered()->get();
 

@@ -179,7 +179,7 @@
                                     @csrf
                                     <button type="submit" class="mobile-nav-link w-full text-left">Logout</button>
                                 </form>
-                            </div>
+            <form action="{{ route('search.index') }}" method="GET" class="flex">
                         @else
                             <div class="border-t pt-3 mt-3">
                                 <a href="{{ route('login') }}" class="mobile-nav-link">Login</a>

@@ -51,7 +51,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Product is not available'
-            ]);
+            ], 400);
         }
 
         // Check stock
@@ -59,7 +59,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Insufficient stock'
-            ]);
+            ], 400);
         }
 
         // Check if item already exists in cart
@@ -74,7 +74,7 @@ class CartController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Cannot add more items. Stock limit exceeded.'
-                ]);
+                ], 400);
             }
 
             $cartItem->update([

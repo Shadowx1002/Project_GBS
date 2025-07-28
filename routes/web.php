@@ -24,6 +24,12 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -49,6 +55,7 @@ require __DIR__.'/auth.php';
 // Product routes
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/category/{category:slug}', [ProductController::class, 'index'])->name('products.category');
     Route::get('/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 });
 
@@ -67,6 +74,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Verification notice route
+    Route::get('/verification/notice', function () {
+        return view('verification.notice');
+    })->name('verification.notice');
 
     // Age verification routes
     Route::get('/verification', [VerificationController::class, 'show'])->name('verification.show');

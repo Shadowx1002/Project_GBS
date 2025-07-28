@@ -19,7 +19,7 @@ class AgeVerificationMiddleware
             return redirect()->route('login')->with('error', 'Please log in to continue.');
         }
 
-        if (!$user->isEligibleToPurchase()) {
+        if (!$user->isVerified()) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Age verification required. You must be 18+ and verified to purchase gel blasters.'], 403);
             }

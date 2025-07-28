@@ -32,6 +32,8 @@ return new class extends Migration
             
             $table->index(['status', 'is_featured']);
             $table->index(['category_id', 'status']);
+            $table->index(['name']);
+            $table->index(['brand']);
         });
     }
 
