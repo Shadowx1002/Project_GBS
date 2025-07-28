@@ -193,9 +193,23 @@
 
         @auth
             <!-- Cart Sidebar -->
-            <div x-show="cartOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-50 overflow-hidden" style="display: none;">
+            <div x-show="cartOpen" 
+                 x-transition:enter="transition ease-out duration-300" 
+                 x-transition:enter-start="opacity-0" 
+                 x-transition:enter-end="opacity-100" 
+                 x-transition:leave="transition ease-in duration-200" 
+                 x-transition:leave-start="opacity-100" 
+                 x-transition:leave-end="opacity-0" 
+                 class="fixed inset-0 z-50 overflow-hidden" 
+                 style="display: none;">
                 <div class="absolute inset-0 bg-black bg-opacity-50" @click="cartOpen = false"></div>
-                <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl">
+                <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="transform translate-x-full"
+                     x-transition:enter-end="transform translate-x-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="transform translate-x-0"
+                     x-transition:leave-end="transform translate-x-full">
                     <div class="flex flex-col h-full">
                         <div class="flex items-center justify-between p-4 border-b">
                             <h3 class="text-lg font-semibold">Shopping Cart</h3>
