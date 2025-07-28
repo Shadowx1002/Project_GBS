@@ -13,10 +13,6 @@ use App\Mail\OrderConfirmation;
 
 class CheckoutController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'age_verified']);
-    }
 
     public function index()
     {

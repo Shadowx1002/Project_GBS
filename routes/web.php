@@ -86,10 +86,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/verification/download/{id}', [VerificationController::class, 'download'])->name('verification.download');
 
     // Cart routes
-    Route::prefix('cart')->group(function () {
+    Route::prefix('cart')->middleware(['auth'])->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
-        Route::post('/add', [CartController::class, 'add'])->name('cart.add');
-        Route::patch('/{cartItem}', [CartController::class, 'update'])->name('cart.update');
+        Route::post('/add', [CartController::class, 'add'])->middleware('age_verified')->name('cart.add');
+        Route::patch('/{cartItem}', [CartController::class, 'update'])->middleware('age_verified')->name('cart.update');
         Route::delete('/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
         Route::delete('/', [CartController::class, 'clear'])->name('cart.clear');
         Route::get('/count', [CartController::class, 'count'])->name('cart.count');
@@ -97,13 +97,13 @@ Route::middleware('auth')->group(function () {
     });
 
     // Orders routes
-    Route::prefix('orders')->group(function () {
+    Route::prefix('orders')->middleware(['auth'])->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('orders.index');
         Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
     });
 
     // Checkout routes
-    Route::prefix('checkout')->group(function () {
+    Route::prefix('checkout')->middleware(['auth', 'age_verified'])->group(function () {
         Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
         Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
