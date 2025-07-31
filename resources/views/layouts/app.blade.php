@@ -77,9 +77,9 @@
                     <div class="hidden md:flex items-center space-x-4">
                         <!-- Search -->
                         <div class="relative">
-                            <form action="{{ route('products.index') }}" method="GET" class="flex">
-                                <input type="text" name="search" placeholder="Search products..." 
-                                       value="{{ request('search') }}"
+                            <form action="{{ route('search.index') }}" method="GET" class="flex">
+                                <input type="text" name="q" placeholder="Search products..." 
+                                       value="{{ request('q') }}"
                                        class="w-64 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                 <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-r-md hover:bg-primary-700 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,14 +92,14 @@
                         @auth
                             <!-- Cart -->
                             <div class="relative">
-                                <button @click="cartOpen = !cartOpen" class="p-2 text-gray-600 hover:text-gray-900 relative">
+                                <a href="{{ route('cart.index') }}" class="p-2 text-gray-600 hover:text-gray-900 relative">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13l2.5 5"></path>
                                     </svg>
                                     <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" id="cart-count">
                                         {{ auth()->user()->cartItems->sum('quantity') ?? 0 }}
                                     </span>
-                                </button>
+                                </a>
                             </div>
 
                             <!-- User Menu -->
@@ -179,13 +179,27 @@
                                     @csrf
                                     <button type="submit" class="mobile-nav-link w-full text-left">Logout</button>
                                 </form>
-            <form action="{{ route('search.index') }}" method="GET" class="flex">
+                            </div>
                         @else
                             <div class="border-t pt-3 mt-3">
                                 <a href="{{ route('login') }}" class="mobile-nav-link">Login</a>
                                 <a href="{{ route('register') }}" class="mobile-nav-link">Register</a>
                             </div>
                         @endauth
+                        
+                        <!-- Mobile Search -->
+                        <div class="border-t pt-3 mt-3">
+                            <form action="{{ route('search.index') }}" method="GET" class="flex">
+                                <input type="text" name="q" placeholder="Search products..." 
+                                       value="{{ request('q') }}"
+                                       class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm">
+                                <button type="submit" class="px-3 py-2 bg-primary-600 text-white rounded-r-md hover:bg-primary-700 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

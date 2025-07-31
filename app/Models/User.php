@@ -48,6 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserVerification::class);
     }
 
+    public function wishlist()
+    {
+        return $this->hasMany(WishlistItem::class);
+    }
+
     // Helper methods
     public function isAdmin()
     {
