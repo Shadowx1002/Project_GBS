@@ -102,6 +102,9 @@
                                 </a>
                             </div>
 
+                            <!-- Theme Toggle -->
+                            <x-theme-toggle />
+
                             <!-- User Menu -->
                             <div class="relative group">
                                 <button class="flex items-center text-sm text-gray-600 hover:text-gray-900">
@@ -139,6 +142,8 @@
     <a href="{{ route('register') }}" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors">
         Register
                             </a>
+                            <!-- Theme Toggle for guests -->
+                            <x-theme-toggle />
                         @endauth
                     </div>
 
@@ -175,6 +180,26 @@
                                 @if(auth()->user()->isAdmin())
                                     <a href="{{ route('admin.dashboard') }}" class="mobile-nav-link text-blue-600">Admin Panel</a>
                                 @endif
+                                <!-- Mobile Theme Toggle -->
+                                <div class="px-3 py-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
+                                        <div class="flex space-x-2">
+                                            <button data-theme="light" 
+                                                    class="p-1 rounded text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                                </svg>
+                                            </button>
+                                            <button data-theme="dark" 
+                                                    class="p-1 rounded text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="mobile-nav-link w-full text-left">Logout</button>
@@ -184,6 +209,26 @@
                             <div class="border-t pt-3 mt-3">
                                 <a href="{{ route('login') }}" class="mobile-nav-link">Login</a>
                                 <a href="{{ route('register') }}" class="mobile-nav-link">Register</a>
+                                <!-- Mobile Theme Toggle for guests -->
+                                <div class="px-3 py-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
+                                        <div class="flex space-x-2">
+                                            <button data-theme="light" 
+                                                    class="p-1 rounded text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                                </svg>
+                                            </button>
+                                            <button data-theme="dark" 
+                                                    class="p-1 rounded text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         @endauth
                         

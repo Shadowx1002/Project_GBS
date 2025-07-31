@@ -135,6 +135,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // User verification management
     Route::prefix('verifications')->group(function () {
         Route::get('/', [AdminVerificationController::class, 'index'])->name('admin.verifications.index');
+        Route::get('/{verification}', [AdminVerificationController::class, 'show'])->name('admin.verifications.show');
         Route::patch('/{verification}/approve', [AdminVerificationController::class, 'approve'])->name('admin.verifications.approve');
         Route::patch('/{verification}/reject', [AdminVerificationController::class, 'reject'])->name('admin.verifications.reject');
         Route::get('/{verification}/download', [AdminVerificationController::class, 'download'])->name('admin.verifications.download');

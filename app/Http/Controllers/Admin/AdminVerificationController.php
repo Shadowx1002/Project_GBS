@@ -72,6 +72,12 @@ class AdminVerificationController extends Controller
         return back()->with('success', 'Verification rejected successfully.');
     }
 
+    public function show(UserVerification $verification)
+    {
+        $verification->load('user');
+        return view('admin.verifications.show', compact('verification'));
+    }
+
     public function download(UserVerification $verification)
     {
         if (!Storage::exists($verification->id_document_path)) {
