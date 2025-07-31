@@ -10,11 +10,7 @@ use App\Mail\OrderStatusUpdate;
 
 class AdminOrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'admin']);
-    }
-
+    
     public function index(Request $request)
     {
         $query = Order::with(['user', 'items']);

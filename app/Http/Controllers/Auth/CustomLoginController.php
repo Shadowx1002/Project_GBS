@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,14 +28,21 @@ class CustomLoginController extends Controller
 
         $request->session()->regenerate();
 
-        // Check if user needs age verification
         $user = Auth::user();
-        if (!$user->isVerified() && !$user->isAdmin()) {
+
+        // Determine redirect based on user type and status
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard')->with('success', 'Welcome back, Admin!');
+        }
+
+        // For regular users, check verification status
+        if (!$user->isVerified()) {
             return redirect()->route('verification.show')->with('info', 
                 'Please complete age verification to access all features.');
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Default redirect for verified users
+        return redirect()->route('dashboard')->with('success', 'Welcome back!');
     }
 
     /**
@@ -50,6 +56,6 @@ class CustomLoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'You have been logged out successfully.');
     }
 }

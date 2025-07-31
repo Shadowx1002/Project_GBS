@@ -12,10 +12,7 @@ use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'admin']);
-    }
+    
 
     public function index(Request $request)
     {
