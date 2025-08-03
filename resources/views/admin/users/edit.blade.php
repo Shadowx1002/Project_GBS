@@ -172,30 +172,6 @@
 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1 space-y-6">
-                    <!-- Verification Status -->
-                    <div class="card p-6">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-6">Verification Status</h2>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center">
-                                <input type="checkbox" 
-                                       name="is_verified" 
-                                       id="is_verified"
-                                       class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                                       {{ old('is_verified', $user->is_verified) ? 'checked' : '' }}>
-                                <label for="is_verified" class="ml-2 text-sm text-gray-700">
-                                    Age verified (can purchase products)
-                                </label>
-                            </div>
-                            
-                            @if($user->verification)
-                                <div class="text-sm text-gray-600">
-                                    <p><strong>Verification Status:</strong> {{ ucfirst($user->verification->verification_status) }}</p>
-                                    <p><strong>Submitted:</strong> {{ $user->verification->created_at->format('M j, Y') }}</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
 
                     <!-- Actions -->
                     <div class="card p-6">

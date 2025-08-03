@@ -17,8 +17,6 @@ class AdminUserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'phone' => '+1-555-0123',
-            'date_of_birth' => '1985-01-01',
-            'is_verified' => true,
             'is_admin' => true,
             'address_line_1' => '123 Admin Street',
             'city' => 'Admin City',

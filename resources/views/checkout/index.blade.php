@@ -346,7 +346,7 @@
                             <span class="ml-2 text-sm text-gray-700">
                                 I agree to the 
                                 <a href="{{ route('terms') }}" target="_blank" class="text-primary-600 hover:text-primary-700 underline">Terms of Service</a>
-                                and confirm that I am 18+ years old and legally able to purchase gel blasters.
+                                and confirm that I am legally able to purchase gel blasters.
                             </span>
                         </label>
                         @error('terms_accepted')

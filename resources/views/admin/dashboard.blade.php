@@ -61,18 +61,20 @@
                 </div>
             </div>
 
-            <!-- Pending Verifications -->
+            <!-- Out of Stock Products -->
             <div class="card p-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="flex items-center">
-                    <div class="p-3 bg-yellow-100 rounded-full">
-                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.729-.833-2.5 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    <div class="p-3 bg-red-100 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Pending Verifications</p>
-                        <p class="text-2xl font-semibold text-gray-900">{{ $metrics['pending_verifications'] }}</p>
-                        <a href="{{ route('admin.verifications.index') }}" class="text-sm text-yellow-600 hover:text-yellow-700">Review now</a>
+                        <p class="text-sm font-medium text-gray-500">Out of Stock</p>
+                        <p class="text-2xl font-semibold text-gray-900">{{ $metrics['out_of_stock'] }}</p>
+                        @if($metrics['out_of_stock'] > 0)
+                            <a href="{{ route('admin.products.index', ['stock_status' => 'out_of_stock']) }}" class="text-sm text-red-600 hover:text-red-700">Review now</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -93,10 +95,7 @@
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-gray-600">Verified Users</span>
-                        <div class="flex items-center">
-                            <span class="text-sm font-medium text-gray-900">{{ number_format($metrics['verified_users']) }}</span>
-                            <span class="ml-2 text-xs text-gray-500">({{ round(($metrics['verified_users'] / max($metrics['total_users'], 1)) * 100, 1) }}%)</span>
-                        </div>
+                        <span class="text-sm font-medium text-gray-900">All Users</span>
                     </div>
                     
                     <div class="flex justify-between items-center">
@@ -209,15 +208,6 @@
                 <span class="text-sm font-medium text-gray-900">Manage Orders</span>
             </a>
             
-            <a href="{{ route('admin.verifications.index', ['status' => 'pending']) }}" class="card p-4 hover:shadow-lg transition-shadow text-center">
-                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <span class="text-sm font-medium text-gray-900">Age Verifications</span>
-            </a>
-            
             <a href="{{ route('admin.users.index') }}" class="card p-4 hover:shadow-lg transition-shadow text-center">
                 <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                     <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,6 +215,15 @@
                     </svg>
                 </div>
                 <span class="text-sm font-medium text-gray-900">Manage Users</span>
+            </a>
+            
+            <a href="{{ route('admin.products.index', ['stock_status' => 'out_of_stock']) }}" class="card p-4 hover:shadow-lg transition-shadow text-center">
+                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.729-.833-2.5 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                </div>
+                <span class="text-sm font-medium text-gray-900">Stock Alerts</span>
             </a>
         </div>
     </div>

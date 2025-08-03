@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'date_of_birth',
-        'is_verified', 'is_admin', 'address_line_1', 'address_line_2',
+        'name', 'email', 'password', 'phone',
+        'is_admin', 'address_line_1', 'address_line_2',
         'city', 'state', 'postal_code', 'country'
     ];
 
@@ -26,8 +25,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'date_of_birth' => 'date',
-            'is_verified' => 'boolean',
             'is_admin' => 'boolean',
         ];
     }
@@ -43,11 +40,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class);
     }
 
-    public function verification()
-    {
-        return $this->hasOne(UserVerification::class);
-    }
-
     public function wishlist()
     {
         return $this->hasMany(WishlistItem::class);
@@ -59,25 +51,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->is_admin;
     }
 
-    public function isVerified()
-    {
-        return $this->is_verified;
-    }
-
     public function getFullNameAttribute()
     {
         return $this->name;
     }
 
-    public function getAgeAttribute()
-    {
-        return $this->date_of_birth ? $this->date_of_birth->age : null;
-    }
-
     public function isEligibleToPurchase()
     {
-        return $this->date_of_birth && 
-               $this->date_of_birth->diffInYears(now()) >= 18 && 
-               $this->is_verified;
+        return true; // All authenticated users can now purchase
     }
 }

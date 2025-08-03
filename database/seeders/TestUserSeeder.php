@@ -17,8 +17,6 @@ class TestUserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'phone' => '+1-555-0456',
-            'date_of_birth' => '1990-06-15',
-            'is_verified' => true,
             'is_admin' => false,
             'address_line_1' => '456 User Avenue',
             'city' => 'User City',
@@ -34,8 +32,6 @@ class TestUserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'phone' => '+1-555-0789',
-            'date_of_birth' => '1995-03-20',
-            'is_verified' => false,
             'is_admin' => false
         ]);
     }

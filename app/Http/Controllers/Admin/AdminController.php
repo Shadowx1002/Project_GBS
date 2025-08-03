@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\UserVerification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -29,8 +28,6 @@ class AdminController extends Controller
             'total_revenue' => Order::where('payment_status', 'paid')->sum('total_amount'),
             'pending_orders' => Order::where('status', 'pending')->count(),
             'total_users' => User::where('is_admin', false)->count(),
-            'verified_users' => User::where('is_verified', true)->where('is_admin', false)->count(),
-            'pending_verifications' => UserVerification::where('verification_status', 'pending')->count(),
             'total_products' => Product::count(),
             'out_of_stock' => Product::where('in_stock', false)->count(),
         ];

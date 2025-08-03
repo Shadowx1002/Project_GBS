@@ -34,14 +34,7 @@
                            class="form-input">
                 </div>
 
-                <!-- Verification Status Filter -->
-                <div>
-                    <select name="verification_status" class="form-input">
-                        <option value="">All Verification Status</option>
-                        <option value="verified" {{ request('verification_status') === 'verified' ? 'selected' : '' }}>Verified</option>
-                        <option value="unverified" {{ request('verification_status') === 'unverified' ? 'selected' : '' }}>Unverified</option>
-                    </select>
-                </div>
+                <div></div>
 
                 <!-- Submit Button -->
                 <div>
@@ -58,7 +51,6 @@
                         <tr>
                             <th>User</th>
                             <th>Contact</th>
-                            <th>Verification</th>
                             <th>Orders</th>
                             <th>Joined</th>
                             <th>Actions</th>
@@ -91,21 +83,6 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="flex flex-col space-y-1">
-                                        @if($user->is_verified)
-                                            <span class="badge-success">Verified</span>
-                                        @else
-                                            <span class="badge-warning">Unverified</span>
-                                        @endif
-                                        
-                                        @if($user->verification)
-                                            <span class="text-xs text-gray-500">
-                                                {{ ucfirst($user->verification->verification_status) }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td>
                                     <div class="text-sm text-gray-900">{{ $user->orders->count() }} orders</div>
                                     <div class="text-sm text-gray-500">
                                         ${{ number_format($user->orders->where('payment_status', 'paid')->sum('total_amount'), 2) }} total
@@ -132,20 +109,12 @@
                                             </svg>
                                         </a>
 
-                                        @if($user->verification && $user->verification->verification_status === 'pending')
-                                            <a href="{{ route('admin.verifications.index', ['search' => $user->email]) }}" 
-                                               class="text-yellow-600 hover:text-yellow-700" title="Review Verification">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            </a>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-8">
+                                <td colspan="5" class="text-center py-8">
                                     <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-1a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                     </svg>
@@ -173,13 +142,13 @@
             </div>
             
             <div class="card p-4 text-center">
-                <div class="text-2xl font-bold text-green-600">{{ \App\Models\User::where('is_verified', true)->where('is_admin', false)->count() }}</div>
-                <div class="text-sm text-gray-500">Verified Users</div>
+                <div class="text-2xl font-bold text-green-600">{{ \App\Models\Order::where('payment_status', 'paid')->count() }}</div>
+                <div class="text-sm text-gray-500">Paid Orders</div>
             </div>
             
             <div class="card p-4 text-center">
-                <div class="text-2xl font-bold text-yellow-600">{{ \App\Models\UserVerification::where('verification_status', 'pending')->count() }}</div>
-                <div class="text-sm text-gray-500">Pending Verifications</div>
+                <div class="text-2xl font-bold text-yellow-600">{{ \App\Models\Product::where('in_stock', false)->count() }}</div>
+                <div class="text-sm text-gray-500">Out of Stock</div>
             </div>
             
             <div class="card p-4 text-center">

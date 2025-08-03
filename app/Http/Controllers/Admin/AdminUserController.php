@@ -12,7 +12,7 @@ class AdminUserController extends Controller
 
     public function index(Request $request)
     {
-        $query = User::with('verification')->where('is_admin', false);
+        $query = User::where('is_admin', false);
 
         // Search
         if ($request->filled('search')) {
@@ -21,15 +21,6 @@ class AdminUserController extends Controller
                 $q->where('name', 'ILIKE', "%{$searchTerm}%")
                   ->orWhere('email', 'ILIKE', "%{$searchTerm}%");
             });
-        }
-
-        // Filter by verification status
-        if ($request->filled('verification_status')) {
-            if ($request->verification_status === 'verified') {
-                $query->where('is_verified', true);
-            } elseif ($request->verification_status === 'unverified') {
-                $query->where('is_verified', false);
-            }
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate(20);
@@ -43,7 +34,7 @@ class AdminUserController extends Controller
             abort(403);
         }
 
-        $user->load(['verification', 'orders', 'cartItems.product']);
+        $user->load(['orders', 'cartItems.product']);
         return view('admin.users.show', compact('user'));
     }
 
@@ -66,7 +57,6 @@ class AdminUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
-            'is_verified' => 'boolean',
             'address_line_1' => 'nullable|string|max:255',
             'address_line_2' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
@@ -76,7 +66,7 @@ class AdminUserController extends Controller
         ]);
 
         $user->update($request->only([
-            'name', 'email', 'phone', 'is_verified',
+            'name', 'email', 'phone',
             'address_line_1', 'address_line_2', 'city', 
             'state', 'postal_code', 'country'
         ]));

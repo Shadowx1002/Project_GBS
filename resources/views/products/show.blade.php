@@ -130,62 +130,52 @@
                 <!-- Add to Cart Section -->
                 <div class="border-t border-gray-200 pt-6">
                     @auth
-                        @if(auth()->user()->isEligibleToPurchase())
-                            @if($product->canPurchase())
-                                <div class="flex items-center space-x-4 mb-4">
-                                    <!-- Quantity Selector -->
-                                    <div class="flex items-center">
-                                        <label for="quantity" class="text-sm font-medium text-gray-700 mr-3">Quantity:</label>
-                                        <div class="quantity-selector">
-                                            <button type="button" onclick="decrementQuantity()" class="quantity-btn">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-                                                </svg>
-                                            </button>
-                                            <input type="number" 
-                                                   id="quantity" 
-                                                   value="1" 
-                                                   min="1" 
-                                                   max="10"
-                                                   class="quantity-input">
-                                            <button type="button" onclick="incrementQuantity()" class="quantity-btn">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
+                        @if($product->canPurchase())
+                            <div class="flex items-center space-x-4 mb-4">
+                                <!-- Quantity Selector -->
+                                <div class="flex items-center">
+                                    <label for="quantity" class="text-sm font-medium text-gray-700 mr-3">Quantity:</label>
+                                    <div class="quantity-selector">
+                                        <button type="button" onclick="decrementQuantity()" class="quantity-btn">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                                            </svg>
+                                        </button>
+                                        <input type="number" 
+                                               id="quantity" 
+                                               value="1" 
+                                               min="1" 
+                                               max="10"
+                                               class="quantity-input">
+                                        <button type="button" onclick="incrementQuantity()" class="quantity-btn">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="flex flex-col sm:flex-row gap-4">
-                                    <button onclick="addToCartWithQuantity()" 
-                                            class="flex-1 btn-primary text-lg py-4">
-                                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13l2.5 5"></path>
-                                        </svg>
-                                        Add to Cart
-                                    </button>
-                                    
-                                    <button onclick="addToWishlist({{ $product->id }})" 
-                                            class="btn-outline py-4 px-6">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            @else
-                                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                                    <p class="text-red-800 font-medium">This product is currently out of stock.</p>
-                                    <p class="text-red-600 text-sm mt-1">Check back later or contact us for availability updates.</p>
-                                </div>
-                            @endif
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <button onclick="addToCartWithQuantity()" 
+                                        class="flex-1 btn-primary text-lg py-4">
+                                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13l2.5 5"></path>
+                                    </svg>
+                                    Add to Cart
+                                </button>
+                                
+                                <button onclick="addToWishlist({{ $product->id }})" 
+                                        class="btn-outline py-4 px-6">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         @else
-                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                                <p class="text-yellow-800 font-medium">Age verification required to purchase.</p>
-                                <p class="text-yellow-600 text-sm mt-1">You must be 18+ and verified to buy gel blasters.</p>
-                                <a href="{{ route('verification.show') }}" class="btn-primary mt-3">
-                                    Complete Age Verification
-                                </a>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <p class="text-red-800 font-medium">This product is currently out of stock.</p>
+                                <p class="text-red-600 text-sm mt-1">Check back later or contact us for availability updates.</p>
                             </div>
                         @endif
                     @else
@@ -267,7 +257,7 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Safety Information</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>Always wear appropriate protective gear. Use only in designated areas. Follow all local laws and regulations. 18+ age verification required for purchase.</p>
+                                <p>Always wear appropriate protective gear. Use only in designated areas. Follow all local laws and regulations.</p>
                             </div>
                         </div>
                     </div>

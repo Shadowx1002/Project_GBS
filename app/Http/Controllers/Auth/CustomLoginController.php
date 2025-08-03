@@ -35,12 +35,6 @@ class CustomLoginController extends Controller
             return redirect()->route('admin.dashboard')->with('success', 'Welcome back, Admin!');
         }
 
-        // For regular users, check verification status
-        if (!$user->isVerified()) {
-            return redirect()->route('verification.show')->with('info', 
-                'Please complete age verification to access all features.');
-        }
-
         // Default redirect for verified users
         return redirect()->route('dashboard')->with('success', 'Welcome back!');
     }

@@ -71,21 +71,6 @@
                     @enderror
                 </div>
 
-                <!-- Date of Birth -->
-                <div>
-                    <label for="date_of_birth" class="form-label">Date of Birth</label>
-                    <input id="date_of_birth" 
-                           name="date_of_birth" 
-                           type="date" 
-                           required 
-                           class="form-input @error('date_of_birth') border-red-500 @enderror"
-                           value="{{ old('date_of_birth') }}">
-                    <p class="mt-1 text-xs text-gray-500">You must be 18 or older to register</p>
-                    @error('date_of_birth')
-                        <p class="form-error">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Password -->
                 <div>
                     <label for="password" class="form-label">Password</label>
@@ -158,23 +143,6 @@
                     </div>
                 </div>
 
-                <!-- Age Verification Notice -->
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.729-.833-2.5 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">Age Verification Required</h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>After registration, you'll need to verify your age by uploading a government-issued ID to purchase gel blasters. This is required by law.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Submit Button -->
                 <div>
                     <button type="submit" 
@@ -217,35 +185,6 @@ function togglePassword(fieldId) {
     const type = field.getAttribute('type') === 'password' ? 'text' : 'password';
     field.setAttribute('type', type);
 }
-
-// Real-time age validation
-document.getElementById('date_of_birth').addEventListener('change', function() {
-    const dob = new Date(this.value);
-    const today = new Date();
-    const age = today.getFullYear() - dob.getFullYear();
-    const monthDiff = today.getMonth() - dob.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-        age--;
-    }
-    
-    const errorElement = this.parentElement.querySelector('.form-error');
-    const existingAgeError = this.parentElement.querySelector('.age-error');
-    
-    if (existingAgeError) {
-        existingAgeError.remove();
-    }
-    
-    if (age < 18) {
-        const ageError = document.createElement('p');
-        ageError.className = 'form-error age-error';
-        ageError.textContent = 'You must be at least 18 years old to register.';
-        this.parentElement.appendChild(ageError);
-        this.classList.add('border-red-500');
-    } else {
-        this.classList.remove('border-red-500');
-    }
-});
 
 // Password strength indicator
 document.getElementById('password').addEventListener('input', function() {

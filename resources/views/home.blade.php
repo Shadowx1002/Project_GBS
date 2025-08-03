@@ -66,13 +66,6 @@
         </div>
 
         <!-- Age Verification Notice -->
-        <div class="mt-8 text-sm text-gray-300" data-aos="fade-up" data-aos-delay="600">
-            <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-                <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.729-.833-2.5 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                </svg>
-                <span>18+ Age verification required for all purchases</span>
-            </div>
         </div>
     </div>
 
@@ -147,20 +140,13 @@
                             </div>
                             
                             @auth
-                                @if(auth()->user()->isEligibleToPurchase())
-                                    @if($product->canPurchase())
-                                        <button onclick="addToCart({{ $product->id }})" 
-                                                class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
-                                            Add to Cart
-                                        </button>
-                                    @else
-                                        <span class="text-red-500 text-sm font-medium">Out of Stock</span>
-                                    @endif
+                                @if($product->canPurchase())
+                                    <button onclick="addToCart({{ $product->id }})" 
+                                            class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                                        Add to Cart
+                                    </button>
                                 @else
-                                    <a href="{{ route('verification.show') }}" 
-                                       class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors text-sm">
-                                        Verify Age
-                                    </a>
+                                    <span class="text-red-500 text-sm font-medium">Out of Stock</span>
                                 @endif
                             @else
                                 <a href="{{ route('login') }}" 

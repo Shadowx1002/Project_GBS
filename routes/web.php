@@ -7,7 +7,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\Admin\AdminController;
@@ -71,27 +70,17 @@ Route::middleware('auth')->group(function () {
         $user->load(['orders', 'cartItems']);
         
         return view('dashboard');
-    })->middleware(['verified'])->name('dashboard');
+    })->name('dashboard');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Verification notice route
-    Route::get('/verification/notice', function () {
-        return view('verification.notice');
-    })->name('verification.notice');
-
-    // Age verification routes
-    Route::get('/verification', [VerificationController::class, 'show'])->name('verification.show');
-    Route::post('/verification', [VerificationController::class, 'store'])->name('verification.store');
-    Route::get('/verification/download/{id}', [VerificationController::class, 'download'])->name('verification.download');
-
     // Cart routes
     Route::prefix('cart')->middleware(['auth'])->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
-        Route::post('/add', [CartController::class, 'add'])->middleware('age_verified')->name('cart.add');
-        Route::patch('/{cartItem}', [CartController::class, 'update'])->middleware('age_verified')->name('cart.update');
+        Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+        Route::patch('/{cartItem}', [CartController::class, 'update'])->name('cart.update');
         Route::delete('/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
         Route::delete('/', [CartController::class, 'clear'])->name('cart.clear');
         Route::get('/count', [CartController::class, 'count'])->name('cart.count');
@@ -105,7 +94,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Checkout routes
-    Route::prefix('checkout')->middleware(['auth', 'age_verified'])->group(function () {
+    Route::prefix('checkout')->middleware(['auth'])->group(function () {
         Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
         Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
@@ -135,14 +124,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     ]);
     
     // User verification management
-    Route::prefix('verifications')->group(function () {
-        Route::get('/', [AdminVerificationController::class, 'index'])->name('admin.verifications.index');
-        Route::get('/{verification}', [AdminVerificationController::class, 'show'])->name('admin.verifications.show');
-        Route::patch('/{verification}/approve', [AdminVerificationController::class, 'approve'])->name('admin.verifications.approve');
-        Route::patch('/{verification}/reject', [AdminVerificationController::class, 'reject'])->name('admin.verifications.reject');
-        Route::get('/{verification}/download', [AdminVerificationController::class, 'download'])->name('admin.verifications.download');
-    });
-    
     // User management
     Route::resource('users', AdminUserController::class)->only(['index', 'show', 'edit', 'update'])->names([
         'index' => 'admin.users.index',

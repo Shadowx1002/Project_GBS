@@ -172,15 +172,11 @@
                                         <div class="flex space-x-2">
                                             <a href="{{ route('products.show', $product->slug) }}" 
                                                class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors text-sm">
-                                                Quick View
-                                            </a>
-                                            @auth
-                                                @if(auth()->user()->isEligibleToPurchase() && $product->canPurchase())
-                                                    <button onclick="addToCart({{ $product->id }})" 
-                                                            class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
-                                                        Add to Cart
-                                                    </button>
-                                                @endif
+                                            @if($product->canPurchase())
+                                                <button onclick="addToCart({{ $product->id }})" 
+                                                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
+                                                    Add to Cart
+                                                </button>
                                             @endauth
                                         </div>
                                     </div>
@@ -235,20 +231,10 @@
                                         </div>
                                         
                                         @auth
-                                            @if(auth()->user()->isEligibleToPurchase())
-                                                @if($product->canPurchase())
-                                                    <button onclick="addToCart({{ $product->id }})" 
-                                                            class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
-                                                        Add to Cart
-                                                    </button>
-                                                @else
-                                                    <span class="text-red-500 text-sm font-medium">Out of Stock</span>
-                                                @endif
-                                            @else
-                                                <a href="{{ route('verification.show') }}" 
-                                                   class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors text-sm">
-                                                    Verify Age
-                                                </a>
+                                            @if($product->canPurchase())
+                                                <button onclick="addToCart({{ $product->id }})" 
+                                                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
+                                                <span class="text-red-500 text-sm font-medium">Out of Stock</span>
                                             @endif
                                         @else
                                             <a href="{{ route('login') }}" 

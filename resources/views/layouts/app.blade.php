@@ -121,9 +121,6 @@
                                         <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                                         <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</a>
                                         <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                                        @if(!auth()->user()->isVerified())
-                                            <a href="{{ route('verification.show') }}" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Verify Age</a>
-                                        @endif
                                         @if(auth()->user()->isAdmin())
                                             <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-blue-600 hover:bg-gray-100">Admin Panel</a>
                                         @endif
@@ -174,9 +171,6 @@
                                 <a href="{{ route('dashboard') }}" class="mobile-nav-link">Dashboard</a>
                                 <a href="{{ route('orders.index') }}" class="mobile-nav-link">My Orders</a>
                                 <a href="{{ route('cart.index') }}" class="mobile-nav-link">Cart</a>
-                                @if(!auth()->user()->isVerified())
-                                    <a href="{{ route('verification.show') }}" class="mobile-nav-link text-red-600">Verify Age</a>
-                                @endif
                                 @if(auth()->user()->isAdmin())
                                     <a href="{{ route('admin.dashboard') }}" class="mobile-nav-link text-blue-600">Admin Panel</a>
                                 @endif
