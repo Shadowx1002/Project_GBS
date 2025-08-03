@@ -57,7 +57,7 @@
                                     <div class="py-1">
                                         <a href="{{ route('products.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All Products</a>
                                         @foreach($globalCategories as $category)
-                                            <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            <a href="{{ route('products.index') }}?category={{ $category->slug }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                 {{ $category->name }}
                                             </a>
                                         @endforeach
@@ -164,7 +164,7 @@
                         <a href="{{ route('home') }}" class="mobile-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
                         <a href="{{ route('products.index') }}" class="mobile-nav-link">All Products</a>
                         @foreach($globalCategories as $category)
-                            <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="mobile-nav-link ml-4">{{ $category->name }}</a>
+                            <a href="{{ route('products.index') }}?category={{ $category->slug }}" class="mobile-nav-link ml-4">{{ $category->name }}</a>
                         @endforeach
                         <a href="{{ route('about') }}" class="mobile-nav-link">About</a>
                         <a href="{{ route('contact') }}" class="mobile-nav-link">Contact</a>

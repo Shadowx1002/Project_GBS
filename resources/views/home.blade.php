@@ -12,6 +12,32 @@
         <!-- Animated Background Elements -->
         <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse-slow"></div>
         <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-bounce-slow"></div>
+        
+        <!-- Tactical Grid Overlay -->
+        <div class="tactical-grid"></div>
+        
+        <!-- Floating Particles -->
+        <div id="particles-container" class="absolute inset-0"></div>
+        
+        <!-- Bullet Trail Effects -->
+        <div id="bullet-container" class="absolute inset-0 pointer-events-none"></div>
+        
+        <!-- Muzzle Flash Effects -->
+        <div class="absolute top-1/3 left-10 opacity-0" id="muzzle-flash-1">
+            <div class="w-8 h-8 bg-yellow-400 rounded-full blur-sm animate-ping"></div>
+        </div>
+        <div class="absolute bottom-1/3 right-10 opacity-0" id="muzzle-flash-2">
+            <div class="w-6 h-6 bg-orange-400 rounded-full blur-sm animate-ping"></div>
+        </div>
+        
+        <!-- Crosshair Overlay -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+            <div class="relative">
+                <div class="w-8 h-0.5 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="w-0.5 h-8 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="w-16 h-16 border border-white rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Hero Content -->
@@ -31,12 +57,12 @@
                 </svg>
                 Shop Now
             </a>
-            <a href="#features" class="btn-outline text-lg px-8 py-4 inline-flex items-center border-white text-white hover:bg-white hover:text-gray-900">
+            <button onclick="triggerFireEffect()" class="btn-outline text-lg px-8 py-4 inline-flex items-center border-white text-white hover:bg-white hover:text-gray-900">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
-                Learn More
-            </a>
+                Fire Demo
+            </button>
         </div>
 
         <!-- Age Verification Notice -->
@@ -51,7 +77,7 @@
     </div>
 
     <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce" onclick="document.getElementById('featured').scrollIntoView({behavior: 'smooth'})">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
@@ -218,10 +244,10 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <!-- Feature 1 -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-primary-200 transition-colors cursor-pointer transform hover:scale-110 duration-300">
                     <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                     </svg>
@@ -232,7 +258,7 @@
 
             <!-- Feature 2 -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-primary-200 transition-colors cursor-pointer transform hover:scale-110 duration-300">
                     <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                     </svg>
@@ -243,7 +269,7 @@
 
             <!-- Feature 3 -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-primary-200 transition-colors cursor-pointer transform hover:scale-110 duration-300">
                     <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
@@ -254,7 +280,7 @@
 
             <!-- Feature 4 -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="400">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-primary-200 transition-colors cursor-pointer transform hover:scale-110 duration-300">
                     <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
@@ -265,7 +291,7 @@
 
             <!-- Feature 5 -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="500">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-primary-200 transition-colors cursor-pointer transform hover:scale-110 duration-300">
                     <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                     </svg>
@@ -276,13 +302,30 @@
 
             <!-- Feature 6 -->
             <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-primary-200 transition-colors cursor-pointer transform hover:scale-110 duration-300">
                     <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Community</h3>
                 <p class="text-gray-600">Join our growing community of gel blaster enthusiasts. Access exclusive events, tournaments, and gameplay tips.</p>
+            </div>
+        </div>
+        
+        <!-- Interactive Demo Section -->
+        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white relative overflow-hidden" data-aos="fade-up">
+            <div class="absolute inset-0 bg-pattern opacity-10"></div>
+            <div class="relative z-10 text-center">
+                <h3 class="text-2xl font-bold mb-4">Experience the Action</h3>
+                <p class="text-gray-300 mb-6">Click anywhere on the hero section above or press SPACE to see our firing effects demo</p>
+                <div class="flex justify-center space-x-4">
+                    <button onclick="triggerFireEffect()" class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors">
+                        Trigger Burst Fire
+                    </button>
+                    <button onclick="firingSystem.randomFire()" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                        Single Shot
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -320,6 +363,252 @@
 
 @push('scripts')
 <script>
+// Enhanced Firing Effects System
+class FiringEffectsSystem {
+    constructor() {
+        this.bulletContainer = document.getElementById('bullet-container');
+        this.particlesContainer = document.getElementById('particles-container');
+        this.isAutoFiring = false;
+        this.autoFireInterval = null;
+        
+        this.init();
+    }
+    
+    init() {
+        this.createFloatingParticles();
+        this.startAutoFiring();
+        
+        // Add click listeners for manual firing
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.hero-gradient')) {
+                this.createBulletTrail(e.clientX, e.clientY);
+            }
+        });
+    }
+    
+    createFloatingParticles() {
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                this.createParticle();
+            }, i * 400);
+        }
+        
+        // Continuously create new particles
+        setInterval(() => {
+            this.createParticle();
+        }, 2000);
+    }
+    
+    createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'hero-particle';
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+        
+        this.particlesContainer.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 12000);
+    }
+    
+    startAutoFiring() {
+        this.isAutoFiring = true;
+        this.autoFireInterval = setInterval(() => {
+            if (this.isAutoFiring) {
+                this.randomFire();
+            }
+        }, 3000 + Math.random() * 2000);
+    }
+    
+    stopAutoFiring() {
+        this.isAutoFiring = false;
+        if (this.autoFireInterval) {
+            clearInterval(this.autoFireInterval);
+        }
+    }
+    
+    randomFire() {
+        const startX = Math.random() * window.innerWidth * 0.2;
+        const startY = Math.random() * window.innerHeight;
+        const endX = window.innerWidth * 0.8 + Math.random() * window.innerWidth * 0.2;
+        const endY = Math.random() * window.innerHeight;
+        
+        this.createBulletTrail(startX, startY, endX, endY);
+    }
+    
+    createBulletTrail(startX, startY, endX = null, endY = null) {
+        // Default target if not specified
+        if (endX === null) {
+            endX = window.innerWidth * 0.7 + Math.random() * window.innerWidth * 0.3;
+            endY = window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.4;
+        }
+        
+        // Create muzzle flash
+        this.createMuzzleFlash(startX, startY);
+        
+        // Create bullet
+        const bullet = document.createElement('div');
+        bullet.className = 'bullet';
+        bullet.style.left = startX + 'px';
+        bullet.style.top = startY + 'px';
+        
+        // Calculate angle
+        const angle = Math.atan2(endY - startY, endX - startX);
+        bullet.style.transform = `rotate(${angle}rad)`;
+        
+        this.bulletContainer.appendChild(bullet);
+        
+        // Create bullet trail
+        const trail = document.createElement('div');
+        trail.className = 'bullet-trail';
+        trail.style.left = startX + 'px';
+        trail.style.top = startY + 'px';
+        trail.style.width = '0px';
+        trail.style.transform = `rotate(${angle}rad)`;
+        trail.style.transformOrigin = 'left center';
+        
+        this.bulletContainer.appendChild(trail);
+        
+        // Animate bullet and trail
+        const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+        const duration = Math.min(distance / 2, 800); // Max 800ms
+        
+        // Animate bullet
+        bullet.animate([
+            { left: startX + 'px', top: startY + 'px' },
+            { left: endX + 'px', top: endY + 'px' }
+        ], {
+            duration: duration,
+            easing: 'linear'
+        });
+        
+        // Animate trail
+        trail.animate([
+            { width: '0px' },
+            { width: distance + 'px' }
+        ], {
+            duration: duration * 0.7,
+            easing: 'ease-out'
+        });
+        
+        // Create impact effect
+        setTimeout(() => {
+            this.createImpactEffect(endX, endY);
+            bullet.remove();
+        }, duration);
+        
+        // Remove trail
+        setTimeout(() => {
+            trail.remove();
+        }, duration + 500);
+        
+        // Create shell casing
+        this.createShellCasing(startX, startY);
+    }
+    
+    createMuzzleFlash(x, y) {
+        const flash = document.createElement('div');
+        flash.className = 'muzzle-flash';
+        flash.style.left = (x - 10) + 'px';
+        flash.style.top = (y - 10) + 'px';
+        
+        this.bulletContainer.appendChild(flash);
+        
+        setTimeout(() => {
+            flash.remove();
+        }, 100);
+    }
+    
+    createImpactEffect(x, y) {
+        const impact = document.createElement('div');
+        impact.className = 'impact-effect';
+        impact.style.left = (x - 8) + 'px';
+        impact.style.top = (y - 8) + 'px';
+        
+        this.bulletContainer.appendChild(impact);
+        
+        // Create impact sparks
+        for (let i = 0; i < 5; i++) {
+            const spark = document.createElement('div');
+            spark.style.position = 'absolute';
+            spark.style.width = '2px';
+            spark.style.height = '2px';
+            spark.style.background = '#fbbf24';
+            spark.style.left = x + 'px';
+            spark.style.top = y + 'px';
+            spark.style.borderRadius = '50%';
+            
+            const sparkAngle = (Math.PI * 2 * i) / 5;
+            const sparkDistance = 20 + Math.random() * 20;
+            
+            spark.animate([
+                { 
+                    transform: 'translate(0, 0) scale(1)',
+                    opacity: 1
+                },
+                { 
+                    transform: `translate(${Math.cos(sparkAngle) * sparkDistance}px, ${Math.sin(sparkAngle) * sparkDistance}px) scale(0)`,
+                    opacity: 0
+                }
+            ], {
+                duration: 300 + Math.random() * 200,
+                easing: 'ease-out'
+            });
+            
+            this.bulletContainer.appendChild(spark);
+            
+            setTimeout(() => {
+                spark.remove();
+            }, 500);
+        }
+        
+        setTimeout(() => {
+            impact.remove();
+        }, 300);
+    }
+    
+    createShellCasing(x, y) {
+        const casing = document.createElement('div');
+        casing.className = 'shell-casing';
+        casing.style.left = x + 'px';
+        casing.style.top = y + 'px';
+        
+        this.bulletContainer.appendChild(casing);
+        
+        setTimeout(() => {
+            casing.remove();
+        }, 1000);
+    }
+    
+    triggerBurst() {
+        const burstCount = 5 + Math.random() * 5;
+        const startX = 50 + Math.random() * 100;
+        const startY = window.innerHeight * 0.4 + Math.random() * window.innerHeight * 0.2;
+        
+        for (let i = 0; i < burstCount; i++) {
+            setTimeout(() => {
+                const spread = 100;
+                const endX = window.innerWidth * 0.7 + (Math.random() - 0.5) * spread;
+                const endY = window.innerHeight * 0.5 + (Math.random() - 0.5) * spread;
+                
+                this.createBulletTrail(startX, startY, endX, endY);
+            }, i * 100);
+        }
+    }
+}
+
+// Initialize firing effects system
+let firingSystem;
+
+// Global function for fire demo button
+function triggerFireEffect() {
+    if (firingSystem) {
+        firingSystem.triggerBurst();
+    }
+}
+
 // Add to cart functionality
 async function addToCart(productId, quantity = 1) {
     try {
@@ -412,6 +701,44 @@ window.addEventListener('scroll', () => {
         const speed = scrolled * 0.5;
         parallax.style.transform = `translateY(${speed}px)`;
     }
+    
+    // Disable auto-firing when scrolled away from hero
+    if (firingSystem) {
+        if (scrolled > window.innerHeight * 0.5) {
+            firingSystem.stopAutoFiring();
+        } else {
+            firingSystem.startAutoFiring();
+        }
+    }
+});
+
+// Initialize effects when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    firingSystem = new FiringEffectsSystem();
+    
+    // Add keyboard shortcuts for effects
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            triggerFireEffect();
+        }
+    });
+});
+
+// Enhanced product card interactions
+document.addEventListener('DOMContentLoaded', () => {
+    const productCards = document.querySelectorAll('.card-product');
+    
+    productCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            // Add subtle glow effect
+            card.style.boxShadow = '0 20px 40px rgba(0,0,0,0.1), 0 0 20px rgba(102, 126, 234, 0.2)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.boxShadow = '';
+        });
+    });
 });
 </script>
 @endpush

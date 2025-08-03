@@ -56,8 +56,10 @@ require __DIR__.'/auth.php';
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
     Route::get('/category/{category:slug}', [ProductController::class, 'index'])->name('products.category');
-    Route::get('/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 });
+
+// Product detail route (outside prefix to avoid conflicts)
+Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Protected routes
 Route::middleware('auth')->group(function () {
