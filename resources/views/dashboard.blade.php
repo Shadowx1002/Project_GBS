@@ -223,7 +223,7 @@
             <h3 class="text-lg font-semibold text-gray-900 mb-6">Continue Shopping</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 @foreach($globalCategories->take(4) as $category)
-                    <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="group">
+                    <a href="{{ route('products.index') }}?category={{ $category->slug }}" class="group">
                         <div class="bg-gray-50 rounded-lg p-6 text-center hover:bg-gray-100 transition-colors">
                             <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-200 transition-colors">
                                 <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

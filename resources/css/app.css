@@ -557,6 +557,59 @@
     }
 }
 
+/* Sound Wave Effect */
+.sound-wave {
+    position: absolute;
+    width: 4px;
+    height: 20px;
+    background: #fbbf24;
+    animation: soundWave 0.5s ease-in-out;
+    border-radius: 2px;
+}
+
+@keyframes soundWave {
+    0%, 100% {
+        transform: scaleY(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scaleY(2);
+        opacity: 1;
+    }
+}
+
+/* Smoke Effect */
+.smoke-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: smokeRise 2s ease-out forwards;
+}
+
+@keyframes smokeRise {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-50px) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Enhanced Button Hover Effects */
+.btn-primary:hover {
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-outline:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
 /* Image Gallery Styles */
 .image-gallery-container {
     position: relative;

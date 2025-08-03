@@ -208,7 +208,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach($categories as $category)
                 <div class="card group cursor-pointer" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
-                    <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="block">
+                    <a href="{{ route('products.index') }}?category={{ $category->slug }}" class="block">
                         <div class="relative overflow-hidden rounded-t-xl">
                             <img src="{{ $category->image_url }}" 
                                  alt="{{ $category->name }}" 

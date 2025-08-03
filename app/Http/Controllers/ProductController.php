@@ -30,13 +30,9 @@ class ProductController extends Controller
 
         // Category filter
         if ($request->filled('category')) {
-            if (is_numeric($request->category)) {
-                $query->where('category_id', $request->category);
-            } else {
-                $query->whereHas('category', function ($categoryQuery) use ($request) {
-                    $categoryQuery->where('slug', $request->category);
-                });
-            }
+            $query->whereHas('category', function ($categoryQuery) use ($request) {
+                $categoryQuery->where('slug', $request->category);
+            });
         }
 
         // Brand filter
