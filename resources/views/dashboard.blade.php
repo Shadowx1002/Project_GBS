@@ -174,22 +174,7 @@
                     </a>
 
                     <!-- Verification -->
-                    @if(!auth()->user()->isVerified())
-                        <a href="{{ route('verification.show') }}" class="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-lg hover:bg-yellow-100 transition-colors">
-                            <div class="p-2 bg-yellow-100 rounded-lg">
-                                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-sm font-medium text-yellow-800">Age Verification</h4>
-                                <p class="text-sm text-yellow-600">Complete to unlock purchases</p>
-                            </div>
-                            <svg class="w-5 h-5 text-yellow-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    @endif
+                    
                 </div>
             </div>
         </div>
