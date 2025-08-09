@@ -17,11 +17,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
+
 
 /*
 |--------------------------------------------------------------------------

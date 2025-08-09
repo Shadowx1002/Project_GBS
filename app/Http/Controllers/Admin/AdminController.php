@@ -12,11 +12,7 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
-
+    
     public function dashboard()
     {
         // Get date ranges

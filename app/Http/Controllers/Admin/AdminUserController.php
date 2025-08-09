@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
+    
     
 
     public function index(Request $request)
