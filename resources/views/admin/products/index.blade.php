@@ -178,6 +178,13 @@
                                             </svg>
                                         </a>
                                         
+                                        <button onclick="toggleProductStatus({{ $product->id }}, '{{ $product->status }}')"
+                                                class="text-yellow-600 hover:text-yellow-700" title="Toggle Status">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </button>
+                                        
                                         <form method="POST" action="{{ route('admin.products.destroy', $product) }}" 
                                               class="inline"
                                               onsubmit="return confirm('Are you sure you want to delete this product?')">

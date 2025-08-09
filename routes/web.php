@@ -99,6 +99,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
         Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
     });
+    
+    // Wishlist routes
+    Route::prefix('wishlist')->middleware(['auth'])->group(function () {
+        Route::get('/', [App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist.index');
+        Route::post('/add', [App\Http\Controllers\WishlistController::class, 'add'])->name('wishlist.add');
+        Route::post('/remove', [App\Http\Controllers\WishlistController::class, 'remove'])->name('wishlist.remove');
+    });
 });
 
 // Admin routes
@@ -115,6 +122,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         'update' => 'admin.products.update',
         'destroy' => 'admin.products.destroy',
     ]);
+    
+    // Additional product routes
+    Route::delete('/products/images/{image}', [AdminProductController::class, 'deleteImage'])->name('admin.products.images.delete');
+    Route::get('/products/stock-alerts', [AdminProductController::class, 'stockAlerts'])->name('admin.products.stock-alerts');
+    Route::patch('/products/{product}/toggle-status', [AdminProductController::class, 'toggleStatus'])->name('admin.products.toggle-status');
     
     // Order management
     Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update'])->names([

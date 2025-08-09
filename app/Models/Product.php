@@ -111,9 +111,15 @@ class Product extends Model
     public function getPrimaryImageUrlAttribute()
     {
         $primaryImage = $this->primaryImage;
-        return $primaryImage 
-            ? asset('storage/' . $primaryImage->image_path)
-            : asset('images/product-placeholder.jpg');
+        if ($primaryImage) {
+            // Check if it's a URL or local file
+            if (filter_var($primaryImage->image_path, FILTER_VALIDATE_URL)) {
+                return $primaryImage->image_path;
+            }
+            return asset('storage/' . $primaryImage->image_path);
+        }
+        
+        return 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg';
     }
 
     public function incrementViews()

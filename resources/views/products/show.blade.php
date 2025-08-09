@@ -145,6 +145,13 @@
                                                id="quantity" 
                                                value="1" 
                                                min="1" 
+                                    
+                                    <button onclick="addToWishlist({{ $product->id }})" 
+                                            class="btn-outline py-4 px-6">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                    </button>
                                                max="10"
                                                class="quantity-input">
                                         <button type="button" onclick="incrementQuantity()" class="quantity-btn">
@@ -156,22 +163,24 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <button onclick="addToCartWithQuantity()" 
-                                        class="flex-1 btn-primary text-lg py-4">
-                                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13l2.5 5"></path>
-                                    </svg>
-                                    Add to Cart
-                                </button>
-                                
-                                <button onclick="addToWishlist({{ $product->id }})" 
-                                        class="btn-outline py-4 px-6">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                    </svg>
-                                </button>
-                            </div>
+                            @auth
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <button onclick="addToCartWithQuantity()" 
+                                            class="flex-1 btn-primary text-lg py-4">
+                                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13l2.5 5"></path>
+                                        </svg>
+                                        Add to Cart
+                                    </button>
+                                    
+                                    <button onclick="addToWishlist({{ $product->id }})" 
+                                            class="btn-outline py-4 px-6">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            @endauth
                         @else
                             <div class="bg-red-50 border border-red-200 rounded-lg p-4">
                                 <p class="text-red-800 font-medium">This product is currently out of stock.</p>

@@ -9,7 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('last_notification_check')->nullable()->after('country');
+            if (!Schema::hasColumn('users', 'last_notification_check')) {
+                $table->timestamp('last_notification_check')->nullable()->after('country');
+            }
         });
     }
 

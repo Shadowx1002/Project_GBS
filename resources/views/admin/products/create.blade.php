@@ -192,6 +192,7 @@
                         
                         <div>
                             <label for="images" class="form-label">Upload Images</label>
+                            <p class="text-sm text-gray-600 mb-2">You can upload images or provide image URLs</p>
                             <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors">
                                 <div class="space-y-1 text-center">
                                     <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -215,6 +216,19 @@
                             @error('images.*')
                                 <p class="form-error">{{ $message }}</p>
                             @enderror
+                            
+                            <!-- Image URL Input -->
+                            <div class="mt-4">
+                                <label for="image_urls" class="form-label">Or provide image URLs (one per line)</label>
+                                <textarea name="image_urls" 
+                                          id="image_urls"
+                                          rows="3"
+                                          class="form-input @error('image_urls') border-red-500 @enderror"
+                                          placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg">{{ old('image_urls') }}</textarea>
+                                @error('image_urls')
+                                    <p class="form-error">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -85,7 +85,7 @@
                                 <td>
                                     <div class="text-sm text-gray-900">{{ $user->orders->count() }} orders</div>
                                     <div class="text-sm text-gray-500">
-                                        ${{ number_format($user->orders->where('payment_status', 'paid')->sum('total_amount'), 2) }} total
+                                        ${{ number_format($user->total_spent, 2) }} total
                                     </div>
                                 </td>
                                 <td>

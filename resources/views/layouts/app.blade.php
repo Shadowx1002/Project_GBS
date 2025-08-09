@@ -101,6 +101,20 @@
                                     </span>
                                 </a>
                             </div>
+                            
+                            <!-- Wishlist -->
+                            <div class="relative">
+                                <a href="{{ route('wishlist.index') }}" class="p-2 text-gray-600 hover:text-gray-900 relative">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                    @if(auth()->user()->wishlist->count() > 0)
+                                        <span class="absolute top-2.5 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                            {{ auth()->user()->wishlist->count() }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </div>
 
                             <!-- Theme Toggle -->
                             <x-theme-toggle />
@@ -120,6 +134,7 @@
                                     <div class="py-1">
                                         <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                                         <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</a>
+                                        <a href="{{ route('wishlist.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Wishlist</a>
                                         <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                                         @if(auth()->user()->isAdmin())
                                             <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-blue-600 hover:bg-gray-100">Admin Panel</a>
@@ -171,6 +186,7 @@
                                 <a href="{{ route('dashboard') }}" class="mobile-nav-link">Dashboard</a>
                                 <a href="{{ route('orders.index') }}" class="mobile-nav-link">My Orders</a>
                                 <a href="{{ route('cart.index') }}" class="mobile-nav-link">Cart</a>
+                                <a href="{{ route('wishlist.index') }}" class="mobile-nav-link">Wishlist</a>
                                 @if(auth()->user()->isAdmin())
                                     <a href="{{ route('admin.dashboard') }}" class="mobile-nav-link text-blue-600">Admin Panel</a>
                                 @endif
@@ -389,8 +405,8 @@
                         <ul class="space-y-2">
                             <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
                             <li><a href="{{ route('products.index') }}" class="text-gray-400 hover:text-white transition-colors">All Products</a></li>
-                            <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                            <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                            <li><a href="/about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="/contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
                             <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Safety Guidelines</a></li>
                         </ul>
                     </div>
@@ -415,7 +431,7 @@
                     <div class="flex space-x-6 mt-4 md:mt-0">
                         <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
                         <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Age Verification Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Safety Guidelines</a>
                     </div>
                 </div>
             </div>

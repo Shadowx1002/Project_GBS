@@ -94,8 +94,8 @@
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-600">Verified Users</span>
-                        <span class="text-sm font-medium text-gray-900">All Users</span>
+                        <span class="text-sm text-gray-600">Active Users</span>
+                        <span class="text-sm font-medium text-gray-900">{{ number_format($metrics['total_users']) }}</span>
                     </div>
                     
                     <div class="flex justify-between items-center">
@@ -315,7 +315,17 @@ setInterval(checkForNotifications, 120000);
 
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = `fixed top-20 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full notification-${type}`;
+    notification.className = `fixed top-20 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+    
+    if (type === 'success') {
+        notification.classList.add('bg-green-100', 'border', 'border-green-400', 'text-green-700');
+    } else if (type === 'error') {
+        notification.classList.add('bg-red-100', 'border', 'border-red-400', 'text-red-700');
+    } else if (type === 'warning') {
+        notification.classList.add('bg-yellow-100', 'border', 'border-yellow-400', 'text-yellow-700');
+    } else {
+        notification.classList.add('bg-blue-100', 'border', 'border-blue-400', 'text-blue-700');
+    }
     
     notification.innerHTML = `
         <div class="flex justify-between items-center">

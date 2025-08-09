@@ -40,6 +40,11 @@ class ProductImage extends Model
     // Helper methods
     public function getImageUrlAttribute()
     {
+        // Check if image_path is a URL
+        if (filter_var($this->image_path, FILTER_VALIDATE_URL)) {
+            return $this->image_path;
+        }
+        
         return asset('storage/' . $this->image_path);
     }
 

@@ -10,6 +10,10 @@ use App\Mail\OrderStatusUpdate;
 
 class AdminOrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
     
     public function index(Request $request)
     {

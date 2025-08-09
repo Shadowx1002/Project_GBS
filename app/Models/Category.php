@@ -58,6 +58,14 @@ class Category extends Model
     // Helper methods
     public function getImageUrlAttribute()
     {
-        return $this->image ? asset('storage/' . $this->image) : asset('images/category-placeholder.jpg');
+        if ($this->image) {
+            // Check if it's a URL or local file
+            if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+                return $this->image;
+            }
+            return asset('storage/' . $this->image);
+        }
+        
+        return 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg';
     }
 }

@@ -172,11 +172,15 @@
                                         <div class="flex space-x-2">
                                             <a href="{{ route('products.show', $product->slug) }}" 
                                                class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors text-sm">
+                                                Quick View
+                                            </a>
+                                            @auth
                                             @if($product->canPurchase())
                                                 <button onclick="addToCart({{ $product->id }})" 
                                                         class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
                                                     Add to Cart
                                                 </button>
+                                            @endif
                                             @endauth
                                         </div>
                                     </div>
@@ -234,6 +238,148 @@
                                             @if($product->canPurchase())
                                                 <button onclick="addToCart({{ $product->id }})" 
                                                         class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
+                                                    Add to Cart
+                                                </button>
+                                            @else
+                                                <span class="text-red-500 text-sm font-medium">Out of Stock</span>
+                                            @endif
+                                        @else
+                                            <a href="{{ route('login') }}" 
+                                               class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors text-sm">
+                                                Login to Buy
+                                            </a>
+                                        @endauth
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-12" data-aos="fade-up">
+                        {{ $products->links() }}
+                    </div>
+                @else
+                    <!-- No Products Found -->
+                    <div class="text-center py-16" data-aos="fade-up">
+                        <svg class="w-24 h-24 text-gray-400 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">No products found</h3>
+                        <p class="text-gray-600 mb-6">
+                            @if(request()->hasAny(['search', 'category', 'brand', 'min_price', 'max_price']))
+                                Try adjusting your search criteria or filters.
+                            @else
+                                We're currently updating our inventory. Check back soon!
+                            @endif
+                        </p>
+                        @if(request()->hasAny(['search', 'category', 'brand', 'min_price', 'max_price']))
+                            <a href="{{ route('products.index') }}" class="btn-primary">
+                                View All Products
+                            </a>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+// Add to cart functionality
+async function addToCart(productId, quantity = 1) {
+    try {
+        const response = await fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: quantity
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Update cart count
+            updateCartCount();
+            
+            // Show success message
+            showNotification('Product added to cart!', 'success');
+        } else {
+            showNotification(data.message || 'Error adding product to cart', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error adding product to cart', 'error');
+    }
+}
+
+// Show notification function
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-20 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+    
+    if (type === 'success') {
+        notification.classList.add('bg-green-100', 'border', 'border-green-400', 'text-green-700');
+    } else {
+        notification.classList.add('bg-red-100', 'border', 'border-red-400', 'text-red-700');
+    }
+    
+    notification.innerHTML = `
+        <div class="flex justify-between items-center">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-gray-500 hover:text-gray-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 5000);
+}
+
+// Mobile filter toggle
+function toggleMobileFilters() {
+    const filtersEl = document.querySelector('.filters-sidebar');
+    filtersEl.classList.toggle('hidden');
+}
+
+// Price range validation
+document.querySelector('input[name="min_price"]').addEventListener('input', function() {
+    const maxPriceInput = document.querySelector('input[name="max_price"]');
+    if (maxPriceInput.value && parseFloat(this.value) > parseFloat(maxPriceInput.value)) {
+        maxPriceInput.value = this.value;
+    }
+});
+
+document.querySelector('input[name="max_price"]').addEventListener('input', function() {
+    const minPriceInput = document.querySelector('input[name="min_price"]');
+    if (minPriceInput.value && parseFloat(this.value) < parseFloat(minPriceInput.value)) {
+        minPriceInput.value = this.value;
+    }
+});
+</script>
+@endpush
+@endsection
                                                 <span class="text-red-500 text-sm font-medium">Out of Stock</span>
                                             @endif
                                         @else

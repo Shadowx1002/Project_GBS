@@ -60,4 +60,15 @@ class User extends Authenticatable
     {
         return true; // All authenticated users can now purchase
     }
+    
+    public function getTotalSpentAttribute()
+    {
+        return $this->orders()->where('payment_status', 'paid')->sum('total_amount');
+    }
+    
+    public function getAverageOrderValueAttribute()
+    {
+        $paidOrders = $this->orders()->where('payment_status', 'paid');
+        return $paidOrders->count() > 0 ? $paidOrders->avg('total_amount') : 0;
+    }
 }

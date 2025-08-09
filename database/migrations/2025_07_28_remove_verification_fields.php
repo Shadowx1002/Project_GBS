@@ -10,11 +10,12 @@ return new class extends Migration
     {
         // Remove verification-related columns from users table
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'date_of_birth',
-                'is_verified',
-                'last_notification_check'
-            ]);
+            if (Schema::hasColumn('users', 'date_of_birth')) {
+                $table->dropColumn('date_of_birth');
+            }
+            if (Schema::hasColumn('users', 'is_verified')) {
+                $table->dropColumn('is_verified');
+            }
         });
 
         // Drop user_verifications table

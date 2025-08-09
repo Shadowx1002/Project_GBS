@@ -102,16 +102,6 @@
                                         <a href="{{ route('admin.orders.show', $order) }}" class="text-xs text-blue-600 hover:text-blue-700">View</a>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
-                        
-                        @if($user->orders->count() > 5)
-                            <div class="mt-4 text-center">
-                                <a href="{{ route('admin.orders.index', ['search' => $user->email]) }}" class="text-sm text-blue-600 hover:text-blue-700">
-                                    View all {{ $user->orders->count() }} orders
-                                </a>
-                            </div>
-                        @endif
                     </div>
                 @endif
 
@@ -168,7 +158,7 @@
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-500">Total Spent</span>
                             <span class="text-lg font-semibold text-gray-900">
-                                ${{ number_format($user->orders->where('payment_status', 'paid')->sum('total_amount'), 2) }}
+                                ${{ number_format($user->total_spent, 2) }}
                             </span>
                         </div>
                         
@@ -180,7 +170,7 @@
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-500">Average Order</span>
                             <span class="text-lg font-semibold text-gray-900">
-                                ${{ $user->orders->where('payment_status', 'paid')->count() > 0 ? number_format($user->orders->where('payment_status', 'paid')->avg('total_amount'), 2) : '0.00' }}
+                                ${{ number_format($user->average_order_value, 2) }}
                             </span>
                         </div>
                     </div>
@@ -194,15 +184,6 @@
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-500">Email Verified</span>
                             @if($user->email_verified_at)
-                                <span class="badge-success">Yes</span>
-                            @else
-                                <span class="badge-warning">No</span>
-                            @endif
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-500">Age Verified</span>
-                            @if($user->is_verified)
                                 <span class="badge-success">Yes</span>
                             @else
                                 <span class="badge-warning">No</span>

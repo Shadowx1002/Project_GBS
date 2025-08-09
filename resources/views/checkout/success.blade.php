@@ -252,7 +252,7 @@
                     <!-- Support -->
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600 mb-2">Need help with your order?</p>
-                        <a href="{{ route('contact') }}" 
+                        <a href="/contact" 
                            class="text-sm text-primary-600 hover:text-primary-700 transition-colors">
                             Contact Support
                         </a>

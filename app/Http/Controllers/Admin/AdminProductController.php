@@ -12,7 +12,10 @@ use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
 
     public function index(Request $request)
     {
@@ -115,6 +118,15 @@ class AdminProductController extends Controller
                     'sort_order' => $index,
                 ]);
             }
+        } else {
+            // Create default placeholder image
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image_path' => 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
+                'alt_text' => $product->name,
+                'is_primary' => true,
+                'sort_order' => 0,
+            ]);
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
@@ -152,6 +164,7 @@ class AdminProductController extends Controller
             'is_featured' => 'boolean',
             'manage_stock' => 'boolean',
             'images.*' => 'image|mimes:jpeg,jpg,png|max:5120',
+            'image_urls' => 'nullable|string',
         ]);
 
         $product->update([
@@ -178,16 +191,36 @@ class AdminProductController extends Controller
         if ($request->hasFile('images')) {
             $currentImageCount = $product->images()->count();
             
-            foreach ($request->file('images') as $index => $image) {
+            foreach ($request->file('images') as $image) {
                 $path = $image->store('products', 'public');
                 
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_path' => $path,
                     'alt_text' => $product->name,
-                    'is_primary' => $currentImageCount === 0 && $index === 0,
-                    'sort_order' => $currentImageCount + $index,
+                    'is_primary' => $currentImageCount === 0,
+                    'sort_order' => $currentImageCount,
                 ]);
+                $currentImageCount++;
+            }
+        }
+        
+        // Handle image URLs
+        if ($request->filled('image_urls')) {
+            $currentImageCount = $product->images()->count();
+            $urls = array_filter(array_map('trim', explode("\n", $request->image_urls)));
+            
+            foreach ($urls as $url) {
+                if (filter_var($url, FILTER_VALIDATE_URL)) {
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $url,
+                        'alt_text' => $product->name,
+                        'is_primary' => $currentImageCount === 0,
+                        'sort_order' => $currentImageCount,
+                    ]);
+                    $currentImageCount++;
+                }
             }
         }
 
@@ -205,5 +238,54 @@ class AdminProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function deleteImage(ProductImage $image)
+    {
+        // Delete file from storage if it's not a URL
+        if (!filter_var($image->image_path, FILTER_VALIDATE_URL)) {
+            Storage::disk('public')->delete($image->image_path);
+        }
+        
+        $productId = $image->product_id;
+        $wasPrimary = $image->is_primary;
+        
+        $image->delete();
+        
+        // If deleted image was primary, make another image primary
+        if ($wasPrimary) {
+            $newPrimary = ProductImage::where('product_id', $productId)->first();
+            if ($newPrimary) {
+                $newPrimary->update(['is_primary' => true]);
+            }
+        }
+        
+        return response()->json(['success' => true]);
+    }
+
+    public function stockAlerts()
+    {
+        $lowStock = Product::where('stock_quantity', '<=', 10)
+                          ->where('stock_quantity', '>', 0)
+                          ->where('manage_stock', true)
+                          ->count();
+                          
+        $outOfStock = Product::where('in_stock', false)->count();
+        
+        return response()->json([
+            'low_stock_count' => $lowStock,
+            'out_of_stock_count' => $outOfStock
+        ]);
+    }
+
+    public function toggleStatus(Product $product, Request $request)
+    {
+        $request->validate([
+            'status' => 'required|in:active,inactive'
+        ]);
+        
+        $product->update(['status' => $request->status]);
+        
+        return response()->json(['success' => true]);
     }
 }

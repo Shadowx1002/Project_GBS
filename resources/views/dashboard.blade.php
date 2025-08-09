@@ -49,7 +49,7 @@
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-500">Total Spent</p>
                         <p class="text-2xl font-semibold text-gray-900">
-                            ${{ number_format(auth()->user()->orders->where('payment_status', 'paid')->sum('total_amount'), 2) }}
+                            ${{ number_format(auth()->user()->total_spent, 2) }}
                         </p>
                     </div>
                 </div>
@@ -173,8 +173,28 @@
                         </div>
                     </a>
 
-                    <!-- Verification -->
-                    
+                    <!-- Wishlist -->
+                    <a href="{{ route('wishlist.index') }}" class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="p-2 bg-pink-100 rounded-lg">
+                            <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-medium text-gray-900">Wishlist</h4>
+                            <p class="text-sm text-gray-500">View saved items</p>
+                        </div>
+                        <div class="ml-auto flex items-center">
+                            @if(auth()->user()->wishlist->count() > 0)
+                                <span class="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center mr-2">
+                                    {{ auth()->user()->wishlist->count() }}
+                                </span>
+                            @endif
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>

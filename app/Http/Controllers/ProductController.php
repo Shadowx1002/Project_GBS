@@ -100,6 +100,7 @@ class ProductController extends Controller
                                  ->inStock()
                                  ->where('category_id', $product->category_id)
                                  ->where('id', '!=', $product->id)
+                                 ->with(['category', 'primaryImage'])
                                  ->limit(4)
                                  ->get();
 

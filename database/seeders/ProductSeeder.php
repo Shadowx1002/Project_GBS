@@ -113,7 +113,7 @@ class ProductSeeder extends Seeder
                 // Create placeholder image
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'image_path' => 'products/placeholder.jpg',
+                    'image_path' => 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
                     'alt_text' => $product->name,
                     'is_primary' => true,
                     'sort_order' => 0
