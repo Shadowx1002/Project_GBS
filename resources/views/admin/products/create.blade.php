@@ -23,7 +23,7 @@
     </div>
 
     <div class="container-custom py-8">
-        <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data" class="max-w-4xl mx-auto">
+        <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data" class="max-w-4xl mx-auto" id="product-form">
             @csrf
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -224,7 +224,8 @@
                                           id="image_urls"
                                           rows="3"
                                           class="form-input @error('image_urls') border-red-500 @enderror"
-                                          placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg">{{ old('image_urls') }}</textarea>
+                                          placeholder="https://example.com/image1.jpg
+https://example.com/image2.jpg">{{ old('image_urls') }}</textarea>
                                 @error('image_urls')
                                     <p class="form-error">{{ $message }}</p>
                                 @enderror
@@ -315,7 +316,7 @@
                     <!-- Actions -->
                     <div class="card p-6">
                         <div class="space-y-3">
-                            <button type="submit" class="w-full btn-primary">
+                            <button type="submit" class="w-full btn-primary" id="submit-btn">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
@@ -335,6 +336,34 @@
 
 @push('scripts')
 <script>
+// Debug form submission
+document.getElementById('product-form').addEventListener('submit', function(e) {
+    console.log('Form submitted');
+    
+    // Check required fields
+    const requiredFields = ['name', 'category_id', 'description', 'price', 'stock_quantity', 'status'];
+    let hasErrors = false;
+    
+    requiredFields.forEach(fieldName => {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        if (!field || !field.value.trim()) {
+            console.error(`Missing required field: ${fieldName}`);
+            hasErrors = true;
+        }
+    });
+    
+    if (hasErrors) {
+        e.preventDefault();
+        alert('Please fill in all required fields');
+        return false;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<div class="spinner mr-2"></div>Creating Product...';
+});
+
 // Auto-generate SKU based on product name
 document.getElementById('name').addEventListener('input', function() {
     const skuField = document.getElementById('sku');

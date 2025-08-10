@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->integer('stock_quantity')->default(0);
             $table->boolean('manage_stock')->default(true);
-            $table->boolean('in_stock')->default(true);
+            $table->boolean('in_stock')->default(false);
             $table->boolean('is_featured')->default(false);
             $table->string('status')->default('active'); // active, inactive, out_of_stock
             $table->string('brand')->nullable();

@@ -80,9 +80,11 @@ class AdminProductController extends Controller
             'is_featured' => 'boolean',
             'manage_stock' => 'boolean',
             'images.*' => 'image|mimes:jpeg,jpg,png|max:5120',
+            'image_urls' => 'nullable|string',
         ]);
 
-        $product = Product::create([
+        try {
+            $product = Product::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'category_id' => $request->category_id,
@@ -100,33 +102,61 @@ class AdminProductController extends Controller
             'weight' => $request->weight,
             'firing_range' => $request->firing_range,
             'build_material' => $request->build_material,
-        ]);
+            ]);
 
-        // Handle image uploads
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                $path = $image->store('products', 'public');
+            $imageCount = 0;
+            
+            // Handle image uploads
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $index => $image) {
+                    $path = $image->store('products', 'public');
+                    
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $path,
+                        'alt_text' => $product->name,
+                        'is_primary' => $imageCount === 0,
+                        'sort_order' => $imageCount,
+                    ]);
+                    $imageCount++;
+                }
+            }
+            
+            // Handle image URLs
+            if ($request->filled('image_urls')) {
+                $urls = array_filter(array_map('trim', explode("\n", $request->image_urls)));
                 
+                foreach ($urls as $url) {
+                    if (filter_var($url, FILTER_VALIDATE_URL)) {
+                        ProductImage::create([
+                            'product_id' => $product->id,
+                            'image_path' => $url,
+                            'alt_text' => $product->name,
+                            'is_primary' => $imageCount === 0,
+                            'sort_order' => $imageCount,
+                        ]);
+                        $imageCount++;
+                    }
+                }
+            }
+            
+            // Create default placeholder image if no images provided
+            if ($imageCount === 0) {
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'image_path' => $path,
+                    'image_path' => 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
                     'alt_text' => $product->name,
-                    'is_primary' => $index === 0,
-                    'sort_order' => $index,
+                    'is_primary' => true,
+                    'sort_order' => 0,
                 ]);
             }
-        } else {
-            // Create default placeholder image
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image_path' => 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
-                'alt_text' => $product->name,
-                'is_primary' => true,
-                'sort_order' => 0,
-            ]);
-        }
 
-        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
+            return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
+            
+        } catch (\Exception $e) {
+            \Log::error('Product creation failed: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Failed to create product. Please try again. Error: ' . $e->getMessage());
+        }
     }
 
     public function show(Product $product)
