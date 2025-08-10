@@ -123,6 +123,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/products/images/{image}', [AdminProductController::class, 'deleteImage'])->name('admin.products.images.delete');
     Route::get('/products/stock-alerts', [AdminProductController::class, 'stockAlerts'])->name('admin.products.stock-alerts');
     Route::patch('/products/{product}/toggle-status', [AdminProductController::class, 'toggleStatus'])->name('admin.products.toggle-status');
+    Route::post('/products/bulk-update', [AdminProductController::class, 'bulkUpdate'])->name('admin.products.bulk-update');
+    Route::get('/products/export', [AdminProductController::class, 'export'])->name('admin.products.export');
     
     // Order management
     Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update'])->names([
